@@ -21,6 +21,7 @@ import org.jitsi.jibri.sink.Sink
 import java.nio.file.Path
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import org.jitsi.jibri.service.impl.FileRecordingFileName
 
 /**
  * [FileSink] represents a sink which will write to a media file on the
@@ -29,10 +30,6 @@ import java.time.format.DateTimeFormatter
  * are able to append a timestamp to the filename, so we can't give the caller full control
  * over the value anyway.  Because of that I just made the value hard-coded.
  */
-
-data class FileRecordingFileName(
-    var fileName: String = ""
-)
 
 class FileSink(recordingsDirectory: Path, callName: String, extension: String = "mp4") : Sink {
     val file: Path

@@ -32,7 +32,6 @@ import org.jitsi.jibri.service.ErrorSettingPresenceFields
 import org.jitsi.jibri.service.JibriService
 import org.jitsi.jibri.sink.Sink
 import org.jitsi.jibri.sink.impl.FileSink
-import org.jitsi.jibri.sink.impl.FileRecordingFileName
 import org.jitsi.jibri.status.ComponentState
 import org.jitsi.jibri.status.ErrorScope
 import org.jitsi.jibri.util.LoggingUtils
@@ -76,10 +75,11 @@ data class FileRecordingParams(
      * A map of arbitrary key, value metadata that will be written
      * to the metadata file.
      */
-    val additionalMetadata: Map<Any, Any>? = null,
-    var recordingFileName: FileRecordingFileName
+    val additionalMetadata: Map<Any, Any>? = null
 )
-
+data class FileRecordingFileName(
+    var fileName: String = ""
+)
 /**
  * Set of metadata we'll put alongside the recording file(s)
  */
@@ -108,7 +108,8 @@ class FileRecordingJibriService(
     private val fileRecordingParams: FileRecordingParams,
     private val jibriSelenium: JibriSelenium = JibriSelenium(),
     private val capturer: FfmpegCapturer = FfmpegCapturer(),
-    private val processFactory: ProcessFactory = ProcessFactory()
+    private val processFactory: ProcessFactory = ProcessFactory(),
+    private val fileRecordingFileName: FileRecordingFileName
 ) : StatefulJibriService("File recording") {
     /**
      * The [Sink] this class will use to model the file on the filesystem
@@ -204,7 +205,7 @@ class FileRecordingJibriService(
             val finalizeCommand = listOf(
                 fileRecordingParams.finalizeScriptPath.toString(),
                 sessionRecordingDirectory.toString(),
-                recordingFileName.fileName.toString(),
+                fileRecordingFileName.fileName.toString(),
                 fileRecordingParams.additionalMetadata
             )
             with(processFactory.createProcess(finalizeCommand)) {

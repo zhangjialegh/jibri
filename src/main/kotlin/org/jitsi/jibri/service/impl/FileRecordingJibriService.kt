@@ -32,6 +32,7 @@ import org.jitsi.jibri.service.ErrorSettingPresenceFields
 import org.jitsi.jibri.service.JibriService
 import org.jitsi.jibri.sink.Sink
 import org.jitsi.jibri.sink.impl.FileSink
+import org.jitsi.jibri.sink.impl.FileRecordingFileName
 import org.jitsi.jibri.status.ComponentState
 import org.jitsi.jibri.status.ErrorScope
 import org.jitsi.jibri.util.LoggingUtils
@@ -75,7 +76,8 @@ data class FileRecordingParams(
      * A map of arbitrary key, value metadata that will be written
      * to the metadata file.
      */
-    val additionalMetadata: Map<Any, Any>? = null
+    val additionalMetadata: Map<Any, Any>? = null,
+    var recordingFileName: FileRecordingFileName
 )
 
 /**
@@ -202,8 +204,8 @@ class FileRecordingJibriService(
             val finalizeCommand = listOf(
                 fileRecordingParams.finalizeScriptPath.toString(),
                 sessionRecordingDirectory.toString(),
-                sink.file.toString(),
-                fileRecordingParams.additionalMetadata.token
+                recordingFileName.fileName.toString(),
+                fileRecordingParams.additionalMetadata
             )
             with(processFactory.createProcess(finalizeCommand)) {
                 start()

@@ -207,7 +207,7 @@ class FileRecordingJibriService(
                 fileRecordingParams.finalizeScriptPath.toString(),
                 sessionRecordingDirectory.toString(),
                 fileRecordingFileName.fileName.toString(),
-                fileRecordingParams.additionalMetadata
+                fileRecordingParams.additionalMetadata.get("token").toString()
             )
             with(processFactory.createProcess(finalizeCommand)) {
                 start()

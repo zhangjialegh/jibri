@@ -205,7 +205,7 @@ class FileRecordingJibriService(
             val finalizeCommand = listOf(
                 fileRecordingParams.finalizeScriptPath.toString(),
                 sessionRecordingDirectory.toString(),
-                fileRecordingFileName.fileName.toString()
+                fileRecordingFileName.fileName
             )
             with(processFactory.createProcess(finalizeCommand)) {
                 start()

@@ -108,8 +108,7 @@ class FileRecordingJibriService(
     private val fileRecordingParams: FileRecordingParams,
     private val jibriSelenium: JibriSelenium = JibriSelenium(),
     private val capturer: FfmpegCapturer = FfmpegCapturer(),
-    private val processFactory: ProcessFactory = ProcessFactory(),
-    private val fileRecordingFileName: FileRecordingFileName
+    private val processFactory: ProcessFactory = ProcessFactory()
 ) : StatefulJibriService("File recording") {
     /**
      * The [Sink] this class will use to model the file on the filesystem
@@ -205,7 +204,7 @@ class FileRecordingJibriService(
             val finalizeCommand = listOf(
                 fileRecordingParams.finalizeScriptPath.toString(),
                 sessionRecordingDirectory.toString(),
-                fileRecordingFileName.fileName
+                sink.path
             )
             with(processFactory.createProcess(finalizeCommand)) {
                 start()

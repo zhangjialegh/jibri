@@ -108,7 +108,8 @@ class FileRecordingJibriService(
     private val fileRecordingParams: FileRecordingParams,
     private val jibriSelenium: JibriSelenium = JibriSelenium(),
     private val capturer: FfmpegCapturer = FfmpegCapturer(),
-    private val processFactory: ProcessFactory = ProcessFactory()
+    private val processFactory: ProcessFactory = ProcessFactory(),
+    private val fileRecordingFileName: FileRecordingFileName
 ) : StatefulJibriService("File recording") {
     /**
      * The [Sink] this class will use to model the file on the filesystem
@@ -120,8 +121,6 @@ class FileRecordingJibriService(
      */
     private val sessionRecordingDirectory =
         fileRecordingParams.recordingDirectory.resolve(fileRecordingParams.sessionId)
-
-    private val fileRecordingFileName: FileRecordingFileName
 
     init {
         logger.info("Writing recording to $sessionRecordingDirectory")

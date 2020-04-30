@@ -21,7 +21,6 @@ import org.jitsi.jibri.sink.Sink
 import java.nio.file.Path
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import org.jitsi.jibri.service.impl.FileRecordingFileName
 
 /**
  * [FileSink] represents a sink which will write to a media file on the
@@ -37,7 +36,6 @@ class FileSink(recordingsDirectory: Path, callName: String, extension: String = 
         val suffix = "_${LocalDateTime.now().format(TIMESTAMP_FORMATTER)}.$extension"
         val filename = "${callName.take(MAX_FILENAME_LENGTH - suffix.length)}$suffix"
         file = recordingsDirectory.resolve(filename)
-        FileRecordingFileName(filename)
     }
     override val path: String = file.toString()
     override val format: String = extension

@@ -204,7 +204,8 @@ class FileRecordingJibriService(
             val finalizeCommand = listOf(
                 fileRecordingParams.finalizeScriptPath.toString(),
                 sessionRecordingDirectory.toString(),
-                sink.path
+                sink.path,
+                null == fileRecordingParams.additionalMetadata.token ? "" : fileRecordingParams.additionalMetadata.token
             )
             with(processFactory.createProcess(finalizeCommand)) {
                 start()
